@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
+const session = require("express-session");
 
 //connection to the models folder
 const Workout = require("./models/workoutMode");
@@ -18,12 +19,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/wtracker", {
     useUnifiedTopology: true
 });
 
-app.listen(PORT, () => {
-    console.log(`------- App running on port http://localhost:${PORT}`);
-});
-
 //creates a new Workout Object and saves in the db
-
 app.post("/api/workouts", function (req, res) {
     var workout = new Workout(req.body)
 
@@ -61,11 +57,6 @@ app.get("/api/workouts/:id", function (req, res) {
         )
 })
 
-
-
-
-
-
 app.put("/api/workouts/", function (req, res) {
     var query = req.body
     Workout.update({}, { sort: { name: 1 } }).then(function (data, err) {
@@ -77,6 +68,8 @@ app.put("/api/workouts/", function (req, res) {
     })
 })
 
-
+app.listen(PORT, () => {
+    console.log(`App running on port http://localhost:${PORT}`);
+});
 
 module.exports = app
