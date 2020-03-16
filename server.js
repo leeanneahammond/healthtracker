@@ -1,7 +1,7 @@
 const express = require("express");
 const methodOverride = require('method-override')
 const mongoose = require("mongoose");
-const logger = require("morgan");
+const morgan = require("morgan");
 const session = require("express-session");
 const router = express.Router();
 require('dotenv').config()
@@ -13,7 +13,7 @@ const mongoURI = process.env.mongoURI
 const app = express()
 
 //middleware
-app.use(logger("dev"));
+app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static("public"))
@@ -25,18 +25,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/wtracker", {
     useUnifiedTopology: true
 });
 
-//set one route
-app.get('/', (req, res) => {
-    res.send('index route')
-})
 
-app.get('/', (req, res) => {
-    res.render('index.ejs')
-  })
-
-//controller
-const userController = require('./controllers/users.js')
-app.use('/users', userController)
 
 //creates a new Workout Object and saves in the db
 app.post("/api/workouts", function (req, res) {
