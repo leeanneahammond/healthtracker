@@ -10,8 +10,9 @@ const router = express.Router();
 //connection to the models folder
 const Workout = require("./models/workoutMode");
 const PORT = process.env.PORT || 3000;
-const mongoURI = process.env.mongoURI
 const app = express()
+
+process.env.MONGODB_URI
 
 //middleware
 app.use(morgan("dev"));
