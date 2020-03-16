@@ -12,7 +12,6 @@ const Workout = require("./models/workoutMode");
 const PORT = process.env.PORT || 3000;
 const app = express()
 
-process.env.MONGODB_URI
 
 //middleware
 app.use(morgan("dev"));
