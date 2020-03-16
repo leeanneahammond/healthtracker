@@ -18,3 +18,4 @@ const workout = require("./models/workoutModel.js")
  })
 
  module.exports = app
+ module.exports = router

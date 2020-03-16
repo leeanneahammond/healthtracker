@@ -1,23 +1,42 @@
 const express = require("express");
+const methodOverride = require('method-override')
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const session = require("express-session");
+const router = express.Router();
+require('dotenv').config()
 
 //connection to the models folder
 const Workout = require("./models/workoutMode");
-
 const PORT = process.env.PORT || 3000;
+const mongoURI = process.env.mongoURI
 const app = express()
 
+//middleware
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static("public"))
+app.use(methodOverride('_method'))
+
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/wtracker", { 
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
+
+//set one route
+app.get('/', (req, res) => {
+    res.send('index route')
+})
+
+app.get('/', (req, res) => {
+    res.render('index.ejs')
+  })
+
+//controller
+const userController = require('./controllers/users.js')
+app.use('/users', userController)
 
 //creates a new Workout Object and saves in the db
 app.post("/api/workouts", function (req, res) {
@@ -73,3 +92,4 @@ app.listen(PORT, () => {
 });
 
 module.exports = app
+module.exports = router
