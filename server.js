@@ -1,10 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const methodOverride = require('method-override')
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const session = require("express-session");
 const router = express.Router();
-require('dotenv').config()
+
 
 //connection to the models folder
 const Workout = require("./models/workoutMode");
@@ -17,7 +18,7 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static("public"))
-app.use(methodOverride('_method'))
+app.use(methodOverride("_method"))
 
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/wtracker", { 
