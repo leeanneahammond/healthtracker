@@ -11,6 +11,7 @@ const router = express.Router();
 const Workout = require("./models/workoutMode");
 const PORT = process.env.PORT || 3000;
 const app = express()
+const mongoURI = process.env.MONGO_URI
 
 
 //middleware
@@ -26,7 +27,31 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/wtracker", {
     useUnifiedTopology: true
 });
 
+// set one route
+app.get('/', (req, res) => {
+    res.send('index route')
+})
 
+//render
+app.get('/', (req, res) => {
+    res.render('index.ejs')
+  })
+
+//controller
+// const userController = require('./controllers/users.js')
+// app.use('/users', userController)
+
+//sessions controller
+// const sessionsController = require('./controllers/sessions.js')
+// app.use('/sessions', sessionsController)
+
+// const sessionsController = require('./controllers/sessions.js');
+// app.use('/sessions', sessionsController);
+
+//render
+// res.render('index.ejs', {
+//     currentUser: req.session.currentUser
+// });
 
 //creates a new Workout Object and saves in the db
 app.post("/api/workouts", function (req, res) {
